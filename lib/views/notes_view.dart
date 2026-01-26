@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes/widgets/floating_action_button.dart';
 
 import 'package:notes/widgets/notes_list_view.dart';
 
@@ -10,6 +11,7 @@ class NotesView extends StatelessWidget {
     return Scaffold(
       appBar: buildAppBar(),
       body: NotesListView(),
+      floatingActionButton: MyFloatingActionButton(),
     );
   }
 
@@ -37,4 +39,3 @@ class NotesView extends StatelessWidget {
     );
   }
 }
-
