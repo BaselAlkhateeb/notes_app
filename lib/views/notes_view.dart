@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes/widgets/floating_action_button.dart';
+import 'package:notes/widgets/my_app_bar.dart';
 
 import 'package:notes/widgets/notes_list_view.dart';
 
@@ -9,33 +10,12 @@ class NotesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
+      appBar: MyAppBar(text: 'Notes', icon: Icons.search,),
       body: NotesListView(),
       floatingActionButton: MyFloatingActionButton(),
     );
   }
 
-  AppBar buildAppBar() {
-    return AppBar(
-      title: Text(
-        'Notes',
-        style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'poppins'),
-      ),
-      actions: [
-        IconButton(
-          onPressed: () {},
-          icon: Container(
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.15),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Icon(Icons.search, size: 30),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+ 
 }
+
