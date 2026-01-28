@@ -45,7 +45,7 @@ class _MyNoteButtomSheetState extends State<MyNoteButtomSheet> {
                   if (myKey.currentState!.validate()) {
                     myKey.currentState!.save();
                   } else {
-                    autovalidateMode = AutovalidateMode.always;
+                    autovalidateMode = AutovalidateMode.onUserInteraction;
                     setState(() {});
                   }
                 },
