@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:notes/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:notes/cubits/get_notes_cubit/get_notes_cubit.dart';
 import 'package:notes/models/note_model.dart';
+import 'package:notes/widgets/colors_list_view.dart';
 import 'package:notes/widgets/my_button.dart';
 import 'package:notes/widgets/my_text_field.dart';
 
@@ -19,7 +20,7 @@ class _MyNoteButtomSheetState extends State<MyNoteButtomSheet> {
   final GlobalKey<FormState> myKey = GlobalKey<FormState>();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   String? title, subTitle;
-
+  
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AddNoteCubit, AddNoteState>(
@@ -32,7 +33,7 @@ class _MyNoteButtomSheetState extends State<MyNoteButtomSheet> {
             'success',
             'note added successfully',
             backgroundColor: Colors.green.withOpacity(0.4),
-            duration: Duration(seconds: 1)
+            duration: Duration(seconds: 1),
           );
         }
 
@@ -41,8 +42,7 @@ class _MyNoteButtomSheetState extends State<MyNoteButtomSheet> {
             'Failed',
             state.errMessage,
             backgroundColor: Colors.red.withOpacity(0.4),
-            duration: Duration(seconds: 1)
-
+            duration: Duration(seconds: 1),
           );
         }
       },
@@ -77,7 +77,10 @@ class _MyNoteButtomSheetState extends State<MyNoteButtomSheet> {
                         subTitle = value;
                       },
                     ),
-                    SizedBox(height: 30),
+                    SizedBox(height: 20),
+                    ColorsListView(),
+                    SizedBox(height: 20),
+
                     MyButton(
                       isLoading: state is AddNoteLoading,
                       onPressed: () {
@@ -91,7 +94,7 @@ class _MyNoteButtomSheetState extends State<MyNoteButtomSheet> {
                             ).format(DateTime.now()),
                             color: Colors.blue.value,
                           );
-                        BlocProvider.of<AddNoteCubit>(context).addNote(note);
+                          BlocProvider.of<AddNoteCubit>(context).addNote(note);
                         } else {
                           autovalidateMode = AutovalidateMode.onUserInteraction;
                           setState(() {});
@@ -108,3 +111,4 @@ class _MyNoteButtomSheetState extends State<MyNoteButtomSheet> {
     );
   }
 }
+

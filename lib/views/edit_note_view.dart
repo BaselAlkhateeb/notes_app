@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notes/models/note_model.dart';
+import 'package:notes/widgets/edit_colors_list_view.dart';
 import 'package:notes/widgets/my_app_bar.dart';
 import 'package:notes/widgets/my_text_field.dart';
 
@@ -42,7 +43,11 @@ class EditNoteView extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(height: 20),
-              MyTextField(hint: note.title, controller: titleController , hintColor: Colors.grey,),
+              MyTextField(
+                hint: note.title,
+                controller: titleController,
+                hintColor: Colors.grey,
+              ),
               SizedBox(height: 20),
               MyTextField(
                 hint: note.subTitle,
@@ -50,6 +55,8 @@ class EditNoteView extends StatelessWidget {
                 controller: contenetController,
                 maxLines: 5,
               ),
+              SizedBox(height: 20),
+              EditColorsListView(note: note),
             ],
           ),
         ),
