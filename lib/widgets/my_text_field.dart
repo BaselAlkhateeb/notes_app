@@ -6,15 +6,20 @@ class MyTextField extends StatelessWidget {
     required this.hint,
     this.onSaved,
     this.maxLines,
+    this.controller,
+    this.hintColor,
     super.key,
   });
-
+final TextEditingController? controller;
+final Color? hintColor;
   final String hint;
   final int? maxLines;
   final void Function(String?)? onSaved;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+    
+      controller: controller ?? TextEditingController(),
       onSaved: onSaved,
       validator: (value) {
         if(value?.isEmpty??true){
@@ -29,7 +34,7 @@ class MyTextField extends StatelessWidget {
         enabledBorder: buildBorder(),
         focusedBorder: buildBorder(kPrimaryColor),
         hintText: hint,
-        hintStyle: TextStyle(color: kPrimaryColor),
+        hintStyle: TextStyle(color:hintColor?? kPrimaryColor),
       ),
     );
   }

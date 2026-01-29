@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes/cubits/get_notes_cubit/get_notes_cubit.dart';
 import 'package:notes/widgets/floating_action_button.dart';
 import 'package:notes/widgets/my_app_bar.dart';
 
@@ -9,13 +11,12 @@ class NotesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: MyAppBar(text: 'Notes', icon: Icons.search,),
-      body: NotesListView(),
-      floatingActionButton: MyFloatingActionButton(),
+    return  Scaffold(
+        appBar: MyAppBar(text: 'Notes', icon: Icons.search),
+        body: NotesListView(),
+
+        floatingActionButton: MyFloatingActionButton(),
+      
     );
   }
-
- 
 }
-
