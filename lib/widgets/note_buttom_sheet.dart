@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:notes/cubits/cubit/add_note_cubit.dart';
+import 'package:notes/models/note_model.dart';
 import 'package:notes/widgets/my_button.dart';
 import 'package:notes/widgets/my_text_field.dart';
 
@@ -16,44 +21,77 @@ class _MyNoteButtomSheetState extends State<MyNoteButtomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 16),
-      child: SingleChildScrollView(
-        child: Form(
-          autovalidateMode: autovalidateMode,
-          key: myKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              MyTextField(
-                hint: 'Title',
-                onSaved: (value) {
-                  title = value;
-                },
+    return BlocConsumer<AddNoteCubit, AddNoteState>(
+      listener: (context, state) {
+        if (state is AddNoteSuccess) {
+          Navigator.pop(context);
+          Get.snackbar(
+            'success',
+            'note added successfully',
+            backgroundColor: Colors.green.withOpacity(0.4),
+          );
+        }
+
+        if (state is AddNoteFailure) {
+          Get.snackbar(
+            'Failed',
+            'failed to add note',
+            backgroundColor: Colors.red.withOpacity(0.4),
+          );
+        }
+      },
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 16),
+          child: SingleChildScrollView(
+            child: AbsorbPointer(
+              absorbing: state is AddNoteLoading,
+              child: Form(
+                autovalidateMode: autovalidateMode,
+                key: myKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    MyTextField(
+                      hint: 'Title',
+                      onSaved: (value) {
+                        title = value;
+                      },
+                    ),
+                    SizedBox(height: 20),
+                    MyTextField(
+                      hint: 'Content',
+                      maxLines: 5,
+                      onSaved: (value) {
+                        subTitle = value;
+                      },
+                    ),
+                    SizedBox(height: 30),
+                    MyButton(
+                      isLoading: state is AddNoteLoading,
+                      onPressed: () {
+                        if (myKey.currentState!.validate()) {
+                          myKey.currentState!.save();
+                          NoteModel note = NoteModel(
+                            title: title!,
+                            subTitle: subTitle!,
+                            date: DateFormat('dd/MM/yyyy').format(DateTime.now()),
+                            color: Colors.blue.value,
+                          );
+                          context.read<AddNoteCubit>().addNote(note);
+                        } else {
+                          autovalidateMode = AutovalidateMode.onUserInteraction;
+                          setState(() {});
+                        }
+                      },
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(height: 20),
-              MyTextField(
-                hint: 'Content',
-                maxLines: 5,
-                onSaved: (value) {
-                  subTitle = value;
-                },
-              ),
-              SizedBox(height: 30),
-              MyButton(
-                onPressed: () {
-                  if (myKey.currentState!.validate()) {
-                    myKey.currentState!.save();
-                  } else {
-                    autovalidateMode = AutovalidateMode.onUserInteraction;
-                    setState(() {});
-                  }
-                },
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
