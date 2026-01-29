@@ -42,7 +42,12 @@ class _MyNoteButtomSheetState extends State<MyNoteButtomSheet> {
       },
       builder: (context, state) {
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 16),
+          padding: EdgeInsets.only(
+            top: 32.0,
+            left: 16,
+            right: 16,
+            bottom: MediaQuery.of(context).viewInsets.bottom+10,
+          ),
           child: SingleChildScrollView(
             child: AbsorbPointer(
               absorbing: state is AddNoteLoading,
@@ -75,7 +80,9 @@ class _MyNoteButtomSheetState extends State<MyNoteButtomSheet> {
                           NoteModel note = NoteModel(
                             title: title!,
                             subTitle: subTitle!,
-                            date: DateFormat('dd/MM/yyyy').format(DateTime.now()),
+                            date: DateFormat(
+                              'dd/MM/yyyy',
+                            ).format(DateTime.now()),
                             color: Colors.blue.value,
                           );
                           context.read<AddNoteCubit>().addNote(note);
